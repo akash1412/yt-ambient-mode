@@ -1,8 +1,6 @@
 import { useEffect, useRef } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import video from "./assets/video.webm";
+import video1 from "./assets/video-1.mp4";
 function App() {
 	const canvas = useRef<HTMLCanvasElement | null>(null);
 	const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -33,7 +31,7 @@ function App() {
 	const init = () => {
 		const ctx = canvas.current?.getContext("2d");
 		if (ctx && videoRef.current) {
-			ctx.filter = "blur(1px)";
+			ctx.filter = "blur(2px)";
 
 			videoRef.current.addEventListener("loadeddata", draw, false);
 			videoRef.current.addEventListener("seeked", draw, false);
@@ -60,24 +58,17 @@ function App() {
 	}, []);
 
 	return (
-		<>
-			<div className='wrapper'>
-				<video
-					controls
-					style={{ width: "1000px", height: "600px", objectFit: "cover" }}
-					ref={videoRef}
-					className='video'>
-					<source src={video} type='video/webm' />
-					<canvas
-						width='10'
-						height='6'
-						aria-hidden='true'
-						className='canvas'
-						id='js-canvas'
-						ref={canvas}></canvas>
-				</video>
-			</div>
-		</>
+		<div className='wrapper'>
+			<video controls ref={videoRef} className='video'>
+				<source src={video1} type='video/webm' />
+			</video>
+			<canvas
+				width='10'
+				height='6'
+				aria-hidden='true'
+				className='canvas'
+				ref={canvas}></canvas>
+		</div>
 	);
 }
 
