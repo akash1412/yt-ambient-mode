@@ -1,25 +1,23 @@
 import React from "react";
 import useAmbientMode from "../hooks/useAmbientMode";
 
-interface Props {
+const AmbientMode = (props: {
 	children: React.ReactElement<HTMLVideoElement>;
-	videoRef: React.MutableRefObject<HTMLVideoElement | null>;
-}
-const AmbientMode = (props: Props) => {
+}) => {
 	const { children } = props;
 	const { canvasRef, videoRef } = useAmbientMode();
-
 	return (
 		<div className='wrapper'>
 			{React.Children.map(children, child => {
 				if (React.isValidElement(child) && child.type === "video") {
 					return React.cloneElement(child, {
-						ref: element => {
+						className: "video",
+						ref: (element: HTMLVideoElement | null) => {
 							if (videoRef && element) {
 								videoRef.current = element;
 							}
 						},
-					} as React.DetailedReactHTMLElement<React.VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>);
+					} as unknown as React.DetailedReactHTMLElement<React.VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>);
 				}
 				return child;
 			})}
